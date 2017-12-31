@@ -23,8 +23,8 @@
         <result column="longitude" property="longitude"/>
         <result column="latitude" property="latitude"/>
         <result column="status" property="status"/>
-        <association property="course" column="course_id" javaType="Course"
-                     select="CommonMapper.selectCourse"/>
+        <!--<association property="course" column="course_id" javaType="Course"-->
+                     <!--select="CommonMapper.selectCourse"/>-->
         <association property="seminar" column="seminar_id" javaType="Seminar"
                      select="CommonMapper.selectSeminar"/>
         <association property="classInfo" column="class_id" javaType="ClassInfo"
@@ -39,16 +39,16 @@
 
 
 
-    <delete id="deleteClassSelectionByClassId" parameterType="BigInteger">
+    <delete id="deleteClassSelectionByClassId" parameterType="java.math.BigInteger">
         DELETE FROM course_selection
         WHERE class_id=#{classId}
     </delete>
 
-    <delete id="deleteClassByCourseId" parameterType="BigInteger">
+    <delete id="deleteClassByCourseId" parameterType="java.math.BigInteger">
         DELETE FROM class_info
         WHERE course_id = #{courseId}
     </delete>
-    <select id="findTeacherIdByteacherName" parameterType="String" resultType="User">
+    <select id="findTeacherIdByteacherName" parameterType="java.lang.String" resultType="User">
       SELECT id FROM user_info
       WHERE type = 1
       AND `name`=#{teacherName}
@@ -60,7 +60,7 @@
         AND `name` = #{courseName}
     </select>
 
-    <select id="findClassByCourseId" parameterType="BigInteger" resultMap="resultClassInfo">
+    <select id="findClassByCourseId" parameterType="java.math.BigInteger" resultMap="resultClassInfo">
       SELECT id,
               `name`,
               course_id,
@@ -76,7 +76,7 @@
       WHERE course_id = #{courseId}
     </select>
 
-    <select id="findClassByClassId" parameterType="BigInteger" resultMap="resultClassInfo">
+    <select id="findClassByClassId" parameterType="java.math.BigInteger" resultMap="resultClassInfo">
         SELECT id,
         `name`,
         course_id,
@@ -106,7 +106,7 @@
         WHERE id = #{id}
     </update>
 
-    <delete id="deleteClassByClassId" parameterType="BigInteger">
+    <delete id="deleteClassByClassId" parameterType="java.math.BigInteger">
         DELETE FROM class_info
         WHERE id=#{classId}
     </delete>
@@ -116,30 +116,30 @@
         VALUES (#{classInfo.id},#{student.id})
     </insert>
 
-    <select id="findStudentdByStudentId" parameterType="BigInteger" resultType="User">
+    <select id="findStudentdByStudentId" parameterType="java.math.BigInteger" resultType="User">
         SELECT id FROM user_info
         WHERE type = 0
         AND id = #{studentId}
     </select>
 
-    <delete id="deleteCourseSelectionById" parameterType="BigInteger">
+    <delete id="deleteCourseSelectionById" parameterType="java.math.BigInteger">
         DELETE FROM course_selection
         WHERE class_id = #{classId}
         AND student_id = #{userId}
     </delete>
 
-    <select id="findTeacherByTeacherId" parameterType="BigInteger" resultType="User">
+    <select id="findTeacherByTeacherId" parameterType="java.math.BigInteger" resultType="User">
         SELECT id FROM user_info
         WHERE type = 1
         AND id = #{teacherId}
     </select>
 
-    <select id="findCourseByCourseId" parameterType="BigInteger" resultType="Course">
+    <select id="findCourseByCourseId" parameterType="java.math.BigInteger" resultType="Course">
         SELECT id FROM course
         WHERE id = #{courseId}
     </select>
 
-    <select id="findCourseIdByUserIdAndClassId" parameterType="BigInteger" resultType="BigInteger">
+    <select id="findCourseIdByUserIdAndClassId" parameterType="java.math.BigInteger" resultType="java.math.BigInteger">
         SELECT id FROM course_selection
         WHERE class_id = #{classId}
         AND student_id = #{userId}
@@ -150,7 +150,7 @@
         WHERE id = #{seminarId}
     </select>
 
-    <select id="getCallStatusById" parameterType="BigInteger" resultMap="resultLocation">
+    <select id="getCallStatusById" parameterType="java.math.BigInteger" resultMap="resultLocation">
         SELECT id,
                 class_id,
                 seminar_id,
@@ -196,7 +196,7 @@
     </update>
 
 
-    <select id="getScoreRule" parameterType="BigInteger" resultMap="resultClassInfo">
+    <select id="getScoreRule" parameterType="java.math.BigInteger" resultMap="resultClassInfo">
         SELECT id,
         report_percentage,
         presentation_percentage,

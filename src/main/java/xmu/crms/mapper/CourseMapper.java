@@ -2,16 +2,16 @@ package xmu.crms.mapper;
 
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
+import xmu.crms.entity.School;
 import xmu.crms.entity.User;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.service.ClassService;
 import xmu.crms.service.CourseService;
 import xmu.crms.service.SeminarService;
-import xmu.crms.service.UserService;
-
 import java.math.BigInteger;
 import java.util.List;
 
@@ -31,8 +31,10 @@ public interface CourseMapper {
      * @throws CourseNotFoundException  未找到课程
      * @author Huang KunYI
      */
-    List<Course> listCourseByUserId(BigInteger userId);
+    List<Course> listCourseByUserId(@Param("userId") BigInteger userId);
 
+    List<User> getUserByUserId(@Param("userId") BigInteger userId);
+    List<School> selectSchoolBySchoolId(BigInteger schoolId);
 
     /**
      * 按userId创建课程.
@@ -44,7 +46,7 @@ public interface CourseMapper {
      * @throws IllegalArgumentException userId格式错误时抛出
      * @author Huang KunYI
      */
-    Integer insertCourseByUserId( Course course);
+    Integer insertCourseByUserId(Course course);
 
 
     /**
@@ -57,7 +59,7 @@ public interface CourseMapper {
      * @throws CourseNotFoundException  未找到课程
      * @author Huang KunYI
      */
-    Course getCourseByCourseId(BigInteger courseId);
+    Course getCourseByCourseId(@Param("courseId") BigInteger courseId);
 
     /**
      * 按课程获取 courseId.
@@ -90,7 +92,7 @@ public interface CourseMapper {
      * @throws CourseNotFoundException  未找到课程
      * @author Huang KunYI
      */
-    List<Course> listCourseIdByTeacherId(BigInteger TeacherId);
+    List<Course> listCourseIdByTeacherId(@Param("TeacherId") BigInteger TeacherId);
 
 
     /**
@@ -115,7 +117,7 @@ public interface CourseMapper {
      * @see SeminarService #deleteSemiarByCourseId(BigInteger courseId)
      * @see ClassService   #deleteClassByCourseId(BigInteger courseId)
      */
-    int deleteCourseByCourseId(BigInteger courseId);
+    int deleteCourseByCourseId(@Param("courseId") BigInteger courseId);
 
 
     /**
@@ -140,7 +142,7 @@ public interface CourseMapper {
      * @see xmu.crms.service.CourseService #listCourseByCourseName(String courseName)
      * @see ClassService #listClassByCourseId(BigInteger courseId)
      */
-    List<ClassInfo> listClassByCourseId(BigInteger courseId);
+    List<ClassInfo> listClassByCourseId(@Param("courseId") BigInteger courseId);
 
 
 

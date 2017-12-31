@@ -22,11 +22,11 @@ public class Controller {
 	private FixGroupMapper fixGroupMapper;
 
 	@GetMapping("/me")
-	public ResponseEntity<FixGroup> getInfo(){
+	public ResponseEntity<Course> getInfo(){
 		System.out.println("****");
 		BigInteger a,b;
 		a=BigInteger.valueOf(3);b=BigInteger.valueOf(1);
-			return new ResponseEntity<FixGroup>(fixGroupMapper.getFixedGroupById(a,b),HttpStatus.OK);
+			return new ResponseEntity<Course>(fixGroupMapper.getFixedGroupById(a,b),HttpStatus.OK);
     }
 //	@PutMapping("/me")
 //	public ResponseEntity updateUser(){

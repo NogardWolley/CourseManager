@@ -14,7 +14,6 @@ import java.util.List;
 public class CourseDao {
     @Autowired
     CourseMapper courseMapper;
-
     public List<Course> listCourseByUserId(BigInteger userId)
         throws IllegalArgumentException,CourseNotFoundException{
         if(!(userId.intValue()>0)){
