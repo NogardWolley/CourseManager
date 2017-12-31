@@ -218,8 +218,8 @@ public interface SeminarGroupService {
 	 */
 	void automaticallyAllotTopic(BigInteger seminarId) throws
 			IllegalArgumentException, SeminarNotFoundException, GroupNotFoundException;
-	
-	
+
+
 
 	/**
 	 * 根据讨论课Id及用户id，获得该用户所在的讨论课的小组的信息.

@@ -113,6 +113,38 @@ public class classController {
         }
     }
 
+
+    /**
+     *根据id获取班级信息（班级信息，学生信息）
+     *
+     * @author hj
+     * @date 12月31日
+     */
+    @PreAuthorize("hasRole('TEACHER') or hasRole('STUDENT')")
+    @RequestMapping(value = "/{classId}", method = GET)
+    @ResponseBody
+    public ResponseEntity getClassById(@PathVariable BigInteger classId) {
+        ClassInfo classInfo = null;
+        List<User> users = null;
+        try {
+            //获取班级信息
+            try {
+                classInfo = classService.getClassByClassId(classId);
+            }
+            catch (Exception e){}
+            //获取该班级学生
+            try {
+                users = userService.listUserByClassId(classId, null, null);
+            }
+            catch(Exception e){}
+            ClassDetailVO classDetailVO = new ClassDetailVO(classInfo, users.size());
+            System.out.println(classDetailVO);
+            return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(classDetailVO);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).contentType(MediaType.APPLICATION_JSON_UTF8).build();
+        }
+    }
+
     /**
      *按照ID修改班级
      *
