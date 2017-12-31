@@ -117,18 +117,9 @@
     </insert>
 
     <select id="getCourseByCourseId" parameterType="java.math.BigInteger" resultMap="CourseList">
-        SELECT
-            id,
-            name,
-            start_date,
-            end_date.decsription,
-            report_percentage,
-            presentation_percentage,
-            five_point_percentage,
-            four_point_percentage,
-            three_point_percentage
-        FROM course
-        WHERE id = #{id,jdbcType=BIGINT}
+		select id,name,start_date,end_date,teacher_id,description,report_percentage,presentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage
+		from course
+        WHERE id = #{courseId,jdbcType=BIGINT}
     </select>
 
     <update id="updateCourseByCourseId">
