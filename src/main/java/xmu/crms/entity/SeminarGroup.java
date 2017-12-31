@@ -2,8 +2,12 @@ package xmu.crms.entity;
 
 import java.math.BigInteger;
 
+/**
+ * @author mads
+ */
 public class SeminarGroup {
 	private BigInteger id;
+	private String name;
 	private Seminar seminar;
 	private ClassInfo classInfo;
 	private String report;
@@ -11,6 +15,29 @@ public class SeminarGroup {
 	private Integer presentationGrade;
 	private Integer finalGrade;
 	private User leader;
+
+	public SeminarGroup() {
+	}
+
+	public SeminarGroup(BigInteger id, String name, Seminar seminar, ClassInfo classInfo, String report, Integer reportGrade, Integer presentationGrade, Integer finalGrade, User leader) {
+		this.id = id;
+		this.name = name;
+		this.seminar = seminar;
+		this.classInfo = classInfo;
+		this.report = report;
+		this.reportGrade = reportGrade;
+		this.presentationGrade = presentationGrade;
+		this.finalGrade = finalGrade;
+		this.leader = leader;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public BigInteger getId() {
 		return id;
@@ -75,6 +102,7 @@ public class SeminarGroup {
 	public void setLeader(User leader) {
 		this.leader = leader;
 	}
+
 
 	@Override
 	public String toString() {

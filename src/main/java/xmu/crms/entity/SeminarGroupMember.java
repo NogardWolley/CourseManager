@@ -26,12 +26,4 @@ public class SeminarGroupMember {
 		this.student = student;
 	}
 
-	@Override
-	public String toString() {
-		return "SeminarGroupMember{" +
-				"id=" + id +
-				", seminarGroup=" + seminarGroup +
-				", student=" + student +
-				'}';
-	}
 }

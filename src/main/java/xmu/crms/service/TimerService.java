@@ -73,7 +73,7 @@ timerService:
 +    public TimerService(@Autowired final ApplicationContext applicationContext){ 
 +        this.applicationContext = applicationContext; 
 +        Object[] beans = Arrays.stream(applicationContext.getBeanDefinitionNames()).map(applicationContext::getBean).toArray(); 
-+        ClassVO<?>[] beanTypes = Arrays.stream(beans).map(Object::getClass).distinct().toArray(ClassVO<?>[]::new);
++        ClassOrignalVO<?>[] beanTypes = Arrays.stream(beans).map(Object::getClass).distinct().toArray(ClassOrignalVO<?>[]::new);
 +        eventCallbacks = Arrays.stream(beanTypes) 
 +                                     .flatMap(clz -> Arrays.stream(clz.getDeclaredMethods())) 
 +                                     .filter(method -> method.getDeclaredAnnotation(CrmsEvent.class) != null) 

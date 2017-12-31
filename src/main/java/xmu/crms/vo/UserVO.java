@@ -1,64 +1,63 @@
 package xmu.crms.vo;
 
+import xmu.crms.entity.User;
+
+import java.math.BigInteger;
+
+/**
+ * @author mads
+ */
 public class UserVO {
-	Integer id;
-	String type;
-	String name;
-	String number;
-	String phone;
-	String email;
-	String gender;
-	SchoolVO school;
-	String title;
-	String password;
-	String unionID;
-	String avatar;
+    private BigInteger id;
+    private String name;
+    private String number;
 
-	public Integer getId() {
-		return id;
-	}
+    public UserVO() {
+    }
 
-	public String getType() {
-		return type;
-	}
+    public UserVO(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.number = user.getNumber();
+    }
 
-	public String getName() {
-		return name;
-	}
 
-	public String getNumber() {
-		return number;
-	}
+    public UserVO(BigInteger id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public BigInteger getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public String getNumber() {
+        return number;
+    }
 
-	public SchoolVO getSchool() {
-		return school;
-	}
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getUnionID() {
-		return unionID;
-	}
 
-	public String getAvatar() {
-		return avatar;
-	}
+    @Override
+    public String toString() {
+        return "UserVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                '}';
+    }
 }

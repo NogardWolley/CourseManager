@@ -6,7 +6,10 @@ public class FixGroupMember {
 	private BigInteger id;
 	private FixGroup fixGroup;
 	private User student;
-	
+
+	public FixGroupMember() {
+	}
+
 	public BigInteger getId() {
 		return id;
 	}
@@ -34,4 +37,5 @@ public class FixGroupMember {
 				", student=" + student +
 				'}';
 	}
+
 }

@@ -225,7 +225,7 @@
 
 
 <!--
-    <resultMap id="gradeResultMap" type="SeminarGradeDetailVO">
+    <resultMap id="gradeResultMap" type="SeminarGradeDetailOrignalVO">
         <id property="seminarId" column="seminar_id" />
         <result property="leaderId" column="leader_id" />
         <result property="presentationGrade" column="presentation_grade" />

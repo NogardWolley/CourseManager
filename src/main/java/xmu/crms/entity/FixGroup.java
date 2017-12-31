@@ -6,7 +6,10 @@ public class FixGroup {
 	private BigInteger id;
 	private ClassInfo classInfo;
 	private User leader;
-	
+
+	public FixGroup() {
+	}
+
 	public BigInteger getId() {
 		return id;
 	}

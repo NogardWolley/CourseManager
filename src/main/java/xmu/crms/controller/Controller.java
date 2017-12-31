@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.Course;
 import xmu.crms.entity.FixGroup;
 import xmu.crms.vo.*;
-import xmu.crms.dto.*;
-import xmu.crms.dto.ClassVO;
 import xmu.crms.mapper.*;
 
 import java.math.BigInteger;
@@ -59,8 +57,8 @@ public class Controller {
 //		return new ResponseEntity<CourseVO>(new CourseVO(23,"dssd"),HttpStatus.CREATED);
 //	}
 //	@GetMapping("/course/{courseId}")
-//	public ResponseEntity<CourseDetailVO>getCourseOfId(){
-//		return new ResponseEntity<CourseDetailVO>(new CourseDetailVO(23,"OOAD","面向对象分析与设计","邱明","mingqiu@xmu.edu.cn"),HttpStatus.OK);
+//	public ResponseEntity<CourseDetailOrignalVO>getCourseOfId(){
+//		return new ResponseEntity<CourseDetailOrignalVO>(new CourseDetailOrignalVO(23,"OOAD","面向对象分析与设计","邱明","mingqiu@xmu.edu.cn"),HttpStatus.OK);
 //	}
 //	@PostMapping("/course/{courseId}")
 //	public ResponseEntity postCourseOfId(){
@@ -100,29 +98,29 @@ public class Controller {
 //	}
 //	@GetMapping("/course/{courseId}/seminar/current")
 //	public ResponseEntity<SeminarVO> getCurrentSemina(){
-//		ArrayList<ClassVO>list=new ArrayList<ClassVO>();
-//		list.add(new ClassVO(1,"周三12节"));
-//		list.add(new ClassVO(2,"周三34节"));
+//		ArrayList<ClassOrignalVO>list=new ArrayList<ClassOrignalVO>();
+//		list.add(new ClassOrignalVO(1,"周三12节"));
+//		list.add(new ClassOrignalVO(2,"周三34节"));
 //		return new ResponseEntity<SeminarVO>(new SeminarVO(29,"界面原型设计","OOAD","fixed","2017-09-25","2017-10-09",list), HttpStatus.OK);
 //	}
 //	@GetMapping("/course/{courseId}/grade")
-//	public ResponseEntity<ArrayList<SeminarGradeDetailVO>> getCourseGradeSeminarGradeDetail(){
-//		ArrayList<SeminarGradeDetailVO>list=new ArrayList<SeminarGradeDetailVO>();
-//		list.add(new SeminarGradeDetailVO("XXXX","XX","XX",3,4,4));
-//		list.add(new SeminarGradeDetailVO("XXXT","TX","TX",3,4,4));
-//		return new ResponseEntity<ArrayList<SeminarGradeDetailVO>>(list, HttpStatus.OK);
+//	public ResponseEntity<ArrayList<SeminarGradeDetailOrignalVO>> getCourseGradeSeminarGradeDetail(){
+//		ArrayList<SeminarGradeDetailOrignalVO>list=new ArrayList<SeminarGradeDetailOrignalVO>();
+//		list.add(new SeminarGradeDetailOrignalVO("XXXX","XX","XX",3,4,4));
+//		list.add(new SeminarGradeDetailOrignalVO("XXXT","TX","TX",3,4,4));
+//		return new ResponseEntity<ArrayList<SeminarGradeDetailOrignalVO>>(list, HttpStatus.OK);
 //	}
 //
 //	@GetMapping("/class")
-//	public ResponseEntity<ArrayList<ClassVO>> getClasses(){
-//		ArrayList<ClassVO>list=new ArrayList<ClassVO>();
-//		list.add(new ClassVO(23,"XXXX",60,"XX","XX","XX","XX"));
-//		list.add(new ClassVO(42,"XXXX",60,"XX","XX","XX","XX"));
-//		return new ResponseEntity<ArrayList<ClassVO>>(list, HttpStatus.OK);
+//	public ResponseEntity<ArrayList<ClassOrignalVO>> getClasses(){
+//		ArrayList<ClassOrignalVO>list=new ArrayList<ClassOrignalVO>();
+//		list.add(new ClassOrignalVO(23,"XXXX",60,"XX","XX","XX","XX"));
+//		list.add(new ClassOrignalVO(42,"XXXX",60,"XX","XX","XX","XX"));
+//		return new ResponseEntity<ArrayList<ClassOrignalVO>>(list, HttpStatus.OK);
 //	}
 //	@GetMapping("/class/{classId}")
-//	public ResponseEntity<ClassVO> getClassOfId(){
-//		return new ResponseEntity<ClassVO>(new ClassVO(23,"XX",123,"XX","XX",-1,"/XX/XX.XX",new ProportionVO(50,50,20,60,20)),HttpStatus.OK);
+//	public ResponseEntity<ClassOrignalVO> getClassOfId(){
+//		return new ResponseEntity<ClassOrignalVO>(new ClassOrignalVO(23,"XX",123,"XX","XX",-1,"/XX/XX.XX",new ProportionVO(50,50,20,60,20)),HttpStatus.OK);
 //	}
 //	@PutMapping("/class/{classId}")
 //	public ResponseEntity putClassOfId(){
@@ -133,17 +131,17 @@ public class Controller {
 //		return new ResponseEntity(HttpStatus.NO_CONTENT);
 //	}
 //	@GetMapping("/class/{classId}/student")
-//	public ResponseEntity<ArrayList<StudentVO>> getStudentFormClassId(){
-//		ArrayList<StudentVO>list=new ArrayList<StudentVO>();
-//		list.add(new StudentVO(
+//	public ResponseEntity<ArrayList<StudentOrignalVO>> getStudentFormClassId(){
+//		ArrayList<StudentOrignalVO>list=new ArrayList<StudentOrignalVO>();
+//		list.add(new StudentOrignalVO(
 //                3486,
-//                "StudentVO",
+//                "StudentOrignalVO",
 //                "234546",
 //                "qiuming",
 //                "123456789",
 //                "xxxx@xx.com",
 //                "male",
-//                new SchoolVO(
+//                new SchoolOrignalVO(
 //                        32,
 //                        "厦门大学"
 //                ),
@@ -152,15 +150,15 @@ public class Controller {
 //                "XXX",
 //                "/avator/3486.png"
 //        ));
-//		list.add(new StudentVO(
+//		list.add(new StudentOrignalVO(
 //                3487,
-//                "StudentVO",
+//                "StudentOrignalVO",
 //                "234546",
 //                "qiuming",
 //                "123456789",
 //                "xxxx@xx.com",
 //                "male",
-//                new SchoolVO(
+//                new SchoolOrignalVO(
 //                        32,
 //                        "厦门大学"
 //                ),
@@ -169,7 +167,7 @@ public class Controller {
 //                "XXX",
 //                "/avator/3486.png"
 //        ));
-//		return new ResponseEntity<ArrayList<StudentVO>>(list, HttpStatus.OK);
+//		return new ResponseEntity<ArrayList<StudentOrignalVO>>(list, HttpStatus.OK);
 //	}
 //	@PutMapping("/class/{classId}/student")
 //	public ResponseEntity putStudentFormClassId(){
@@ -185,16 +183,16 @@ public class Controller {
 //	}
 //	@GetMapping("/class/{classId}/classGroup")
 //	public ResponseEntity<ClassGroupVO> getClassGroup(){
-//		ArrayList<StudentVO>list=new ArrayList<StudentVO>();
-//		list.add(new StudentVO(
+//		ArrayList<StudentOrignalVO>list=new ArrayList<StudentOrignalVO>();
+//		list.add(new StudentOrignalVO(
 //                3486,
-//                "StudentVO",
+//                "StudentOrignalVO",
 //                "234546",
 //                "qiuming",
 //                "123456789",
 //                "xxxx@xx.com",
 //                "male",
-//                new SchoolVO(
+//                new SchoolOrignalVO(
 //                        32,
 //                        "厦门大学"
 //                ),
@@ -203,15 +201,15 @@ public class Controller {
 //                "XXX",
 //                "/avator/3486.png"
 //        ));
-//		list.add(new StudentVO(
+//		list.add(new StudentOrignalVO(
 //                3487,
-//                "StudentVO",
+//                "StudentOrignalVO",
 //                "234546",
 //                "qiuming",
 //                "123456789",
 //                "xxxx@xx.com",
 //                "male",
-//                new SchoolVO(
+//                new SchoolOrignalVO(
 //                        32,
 //                        "厦门大学"
 //                ),
@@ -220,15 +218,15 @@ public class Controller {
 //                "XXX",
 //                "/avator/3486.png"
 //        ));
-//		ClassGroupVO g=new ClassGroupVO(new StudentVO(
+//		ClassGroupVO g=new ClassGroupVO(new StudentOrignalVO(
 //                34878,
-//                "StudentVO",
+//                "StudentOrignalVO",
 //                "234546",
 //                "qiuming",
 //                "123456789",
 //                "xxxx@xx.com",
 //                "male",
-//                new SchoolVO(
+//                new SchoolOrignalVO(
 //                        32,
 //                        "厦门大学"
 //                ),
@@ -244,8 +242,8 @@ public class Controller {
 //		return new ResponseEntity(HttpStatus.NO_CONTENT);
 //	}
 //	@PutMapping("/class/{classId}/classgroup/assign")
-//	public ResponseEntity<AttendanceListVO> memerAssign(){
-//		return new ResponseEntity<AttendanceListVO>(new AttendanceListVO(77,"ss") ,HttpStatus.NO_CONTENT);
+//	public ResponseEntity<AttendanceListOrignalVO> memerAssign(){
+//		return new ResponseEntity<AttendanceListOrignalVO>(new AttendanceListOrignalVO(77,"ss") ,HttpStatus.NO_CONTENT);
 //	}
 //	@PutMapping("/class/{classId}/classgroup/add")
 //	public ResponseEntity AddMemer(){
@@ -258,11 +256,11 @@ public class Controller {
 //	@GetMapping("/seminar/{seminarId}")
 //	public ResponseEntity<SeminarVO> getSeminarOfId(){
 //		Integer i=29;
-//		ArrayList<ClassVO>list=new ArrayList<ClassVO>();
-//		list.add(new ClassVO(1,"周三12节"));
-//		list.add(new ClassVO(2,"周三34节"));
-//		ArrayList<TopicVO>list1=new ArrayList<TopicVO>();
-//		list1.add(new TopicVO(257,"XXXX"));
+//		ArrayList<ClassOrignalVO>list=new ArrayList<ClassOrignalVO>();
+//		list.add(new ClassOrignalVO(1,"周三12节"));
+//		list.add(new ClassOrignalVO(2,"周三34节"));
+//		ArrayList<TopicOrignalVO>list1=new ArrayList<TopicOrignalVO>();
+//		list1.add(new TopicOrignalVO(257,"XXXX"));
 //		return new ResponseEntity<SeminarVO>(new SeminarVO(i,"界面x原型设计","界面原型设计","fixed","2017-09-25","2017-10-25",list,list1),HttpStatus.OK);
 //	}
 //	@PutMapping("/seminar/{seminarId}")
@@ -274,19 +272,19 @@ public class Controller {
 //		return new ResponseEntity(HttpStatus.NO_CONTENT);
 //	}
 //	@GetMapping("/seminar/{seminarId}/my")
-//	public ResponseEntity<StudentSeminarVO> getMySeminar(){
-//		StudentSeminarVO sem=new StudentSeminarVO(32,"SS","random","OOAD","2017-10-11","2017-11-11",23,true,true);
-//		return new ResponseEntity<StudentSeminarVO>(sem,HttpStatus.OK);
+//	public ResponseEntity<StudentSeminarOrignalVO> getMySeminar(){
+//		StudentSeminarOrignalVO sem=new StudentSeminarOrignalVO(32,"SS","random","OOAD","2017-10-11","2017-11-11",23,true,true);
+//		return new ResponseEntity<StudentSeminarOrignalVO>(sem,HttpStatus.OK);
 //	}
 //	@GetMapping("/seminar/{seminarId}/detail")
-//	public ResponseEntity<SeminarDetailVO> getSeminarDetail(){
-//		SeminarDetailVO sem=new SeminarDetailVO(32,"SS","2017-10-11","2017-11-11","201","qm","xxx2@XXX");
-//		return new ResponseEntity<SeminarDetailVO>(sem,HttpStatus.OK);
+//	public ResponseEntity<SeminarDetailOrignalVO> getSeminarDetail(){
+//		SeminarDetailOrignalVO sem=new SeminarDetailOrignalVO(32,"SS","2017-10-11","2017-11-11","201","qm","xxx2@XXX");
+//		return new ResponseEntity<SeminarDetailOrignalVO>(sem,HttpStatus.OK);
 //	}
 //	@GetMapping("/seminar/{seminarId}/topic")
-//	public ResponseEntity<TopicVO> getSeminarTopic(){
-//		TopicVO sem=new TopicVO(32,"SS","XXXXX","XXXXXXXXXXXXXXXX",5,6,2);
-//		return new ResponseEntity<TopicVO>(sem,HttpStatus.OK);
+//	public ResponseEntity<TopicOrignalVO> getSeminarTopic(){
+//		TopicOrignalVO sem=new TopicOrignalVO(32,"SS","XXXXX","XXXXXXXXXXXXXXXX",5,6,2);
+//		return new ResponseEntity<TopicOrignalVO>(sem,HttpStatus.OK);
 //	}
 //	@PostMapping("/seminar/{seminarId}/topic")
 //	public ResponseEntity PostSeminarTopic(){
@@ -296,8 +294,8 @@ public class Controller {
 //	@GetMapping("/seminar/{seminarId}/group")
 //	public ResponseEntity<ArrayList<GroupVO>> getSeminarGroup(){
 //		ArrayList<GroupVO>list=new ArrayList<GroupVO>();
-//		list.add(new GroupVO(28,"1A1",new TopicVO(234,"XXXX")));
-//		list.add(new GroupVO(38,"1A2",new TopicVO(234,"XXXX")));
+//		list.add(new GroupVO(28,"1A1",new TopicOrignalVO(234,"XXXX")));
+//		list.add(new GroupVO(38,"1A2",new TopicOrignalVO(234,"XXXX")));
 //		return new ResponseEntity<ArrayList<GroupVO>>(list,HttpStatus.OK);
 //	}
 //	@GetMapping("/seminar/{seminarId}/group/my")
@@ -312,27 +310,27 @@ public class Controller {
 //		return new ResponseEntity<SeminarVO>(new SeminarVO(40,"grouping"),HttpStatus.OK);
 //	}
 //	@GetMapping("/seminar/{seminarId}/class/{classId}/attendance/late")
-//	public ResponseEntity<ArrayList<AttendanceListVO>>getAttendanceListVOlate(){
-//		ArrayList<AttendanceListVO>list=new ArrayList<AttendanceListVO>();
-//		list.add(new AttendanceListVO(1234,"WW"));
-//		list.add(new AttendanceListVO(1235,"WWe"));
-//		return new ResponseEntity<ArrayList<AttendanceListVO>>(list,HttpStatus.OK);
+//	public ResponseEntity<ArrayList<AttendanceListOrignalVO>>getAttendanceListVOlate(){
+//		ArrayList<AttendanceListOrignalVO>list=new ArrayList<AttendanceListOrignalVO>();
+//		list.add(new AttendanceListOrignalVO(1234,"WW"));
+//		list.add(new AttendanceListOrignalVO(1235,"WWe"));
+//		return new ResponseEntity<ArrayList<AttendanceListOrignalVO>>(list,HttpStatus.OK);
 //
 //	}
 //	@GetMapping("/seminar/{seminarId}/class/{classId}/attendance/absent")
-//	public ResponseEntity<ArrayList<AttendanceListVO>>getAttendanceListVOabsent(){
-//		ArrayList<AttendanceListVO>list=new ArrayList<AttendanceListVO>();
-//		list.add(new AttendanceListVO(1234,"WW"));
-//		list.add(new AttendanceListVO(1235,"WWe"));
-//		return new ResponseEntity<ArrayList<AttendanceListVO>>(list,HttpStatus.OK);
+//	public ResponseEntity<ArrayList<AttendanceListOrignalVO>>getAttendanceListVOabsent(){
+//		ArrayList<AttendanceListOrignalVO>list=new ArrayList<AttendanceListOrignalVO>();
+//		list.add(new AttendanceListOrignalVO(1234,"WW"));
+//		list.add(new AttendanceListOrignalVO(1235,"WWe"));
+//		return new ResponseEntity<ArrayList<AttendanceListOrignalVO>>(list,HttpStatus.OK);
 //
 //	}
 //	@GetMapping("/seminar/{seminarId}/class/{classId}/attendance/present")
-//	public ResponseEntity<ArrayList<AttendanceListVO>>getAttendanceListVOpresent(){
-//		ArrayList<AttendanceListVO>list=new ArrayList<AttendanceListVO>();
-//		list.add(new AttendanceListVO(1234,"WW"));
-//		list.add(new AttendanceListVO(1235,"WWe"));
-//		return new ResponseEntity<ArrayList<AttendanceListVO>>(list,HttpStatus.OK);
+//	public ResponseEntity<ArrayList<AttendanceListOrignalVO>>getAttendanceListVOpresent(){
+//		ArrayList<AttendanceListOrignalVO>list=new ArrayList<AttendanceListOrignalVO>();
+//		list.add(new AttendanceListOrignalVO(1234,"WW"));
+//		list.add(new AttendanceListOrignalVO(1235,"WWe"));
+//		return new ResponseEntity<ArrayList<AttendanceListOrignalVO>>(list,HttpStatus.OK);
 //
 //	}
 //	@PutMapping("/seminar/{seminarId}/class/{classId}/attendance/{studentId}")
@@ -340,8 +338,8 @@ public class Controller {
 //		return new ResponseEntity(HttpStatus.NO_CONTENT);
 //	}
 //	@GetMapping("/topic/{topicId}")
-//	public ResponseEntity<TopicVO> gettopic(){
-//		return new ResponseEntity<TopicVO>(new TopicVO(12,"A","Ssaasa","asasasss",3,4,5),HttpStatus.OK);
+//	public ResponseEntity<TopicOrignalVO> gettopic(){
+//		return new ResponseEntity<TopicOrignalVO>(new TopicOrignalVO(12,"A","Ssaasa","asasasss",3,4,5),HttpStatus.OK);
 //
 //	}
 //	@PutMapping("/topic/{topicId}")
@@ -355,19 +353,19 @@ public class Controller {
 //
 //	}
 //	@GetMapping("/topic/{topicId}/group")
-//	public ResponseEntity<ArrayList<AttendanceListVO>>gettopicgroup(){
-//		ArrayList<AttendanceListVO>list=new ArrayList<AttendanceListVO>();
-//		list.add(new AttendanceListVO(1234,"WW"));
-//		list.add(new AttendanceListVO(1235,"WWe"));
-//		return new ResponseEntity<ArrayList<AttendanceListVO>>(list,HttpStatus.OK);
+//	public ResponseEntity<ArrayList<AttendanceListOrignalVO>>gettopicgroup(){
+//		ArrayList<AttendanceListOrignalVO>list=new ArrayList<AttendanceListOrignalVO>();
+//		list.add(new AttendanceListOrignalVO(1234,"WW"));
+//		list.add(new AttendanceListOrignalVO(1235,"WWe"));
+//		return new ResponseEntity<ArrayList<AttendanceListOrignalVO>>(list,HttpStatus.OK);
 //
 //	}
 //
 //	@GetMapping("/group/{groupId}")//未完成
 //	public ResponseEntity<GroupVO>getgroup(){
-//		ArrayList<UserVO>list=new ArrayList<UserVO>();
-//		list.add(new UserVO(7,"ss"));
-//		list.add(new UserVO(9,"sss"));
+//		ArrayList<UserOrignalVO>list=new ArrayList<UserOrignalVO>();
+//		list.add(new UserOrignalVO(7,"ss"));
+//		list.add(new UserOrignalVO(9,"sss"));
 //		return new ResponseEntity<GroupVO>(new GroupVO(7),HttpStatus.OK);
 //
 //	}
@@ -400,10 +398,10 @@ public class Controller {
 //		return new ResponseEntity(HttpStatus.NO_CONTENT);
 //	}
 //	@GetMapping("/group/{groupId}/grade")
-//	public ResponseEntity<SeminarGradeVO> lseaderAssignss(){
+//	public ResponseEntity<SeminarGradeOrignalVO> lseaderAssignss(){
 //		ArrayList<presentationGrade> list=new ArrayList<presentationGrade>();
 //		list.add(new presentationGrade(2,2));
-//		return new ResponseEntity<SeminarGradeVO>(new SeminarGradeVO(list,3,3),HttpStatus.OK);
+//		return new ResponseEntity<SeminarGradeOrignalVO>(new SeminarGradeOrignalVO(list,3,3),HttpStatus.OK);
 //	}
 //	@PutMapping("/group/{groupID}/grade/report")
 //	public ResponseEntity lseadercAssign(){
@@ -415,12 +413,12 @@ public class Controller {
 //	}
 //
 //	@GetMapping("/school")
-//	public ResponseEntity<ArrayList<SchoolVO>> searchShoolSomeplace(){
-//		ArrayList<SchoolVO>list=new ArrayList<SchoolVO>();
-//		list.add(new SchoolVO(32,"厦门大学","福建","厦门"));
-//		list.add(new SchoolVO(32,"厦门理工学院","福建","厦门"));
-//		list.add(new SchoolVO(32,"厦门城市职业学院","福建","厦门"));
-//		return new ResponseEntity<ArrayList<SchoolVO>>(list,HttpStatus.OK);
+//	public ResponseEntity<ArrayList<SchoolOrignalVO>> searchShoolSomeplace(){
+//		ArrayList<SchoolOrignalVO>list=new ArrayList<SchoolOrignalVO>();
+//		list.add(new SchoolOrignalVO(32,"厦门大学","福建","厦门"));
+//		list.add(new SchoolOrignalVO(32,"厦门理工学院","福建","厦门"));
+//		list.add(new SchoolOrignalVO(32,"厦门城市职业学院","福建","厦门"));
+//		return new ResponseEntity<ArrayList<SchoolOrignalVO>>(list,HttpStatus.OK);
 //
 //	}
 //	@PostMapping("/school")

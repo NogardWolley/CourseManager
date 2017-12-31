@@ -1,6 +1,10 @@
 package xmu.crms.entity;
 
+import xmu.crms.vo.CourseVO;
+
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Course {
@@ -15,7 +19,65 @@ public class Course {
 	private Integer fivePointPercentage;
 	private Integer fourPointPercentage;
 	private Integer threePointPercentage;
-	
+
+	public Course(CourseVO courseVO) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		this.id = null;
+		this.name = courseVO.getName();
+		try {
+			this.startDate = simpleDateFormat.parse(courseVO.getStartTime());
+			this.endDate = simpleDateFormat.parse(courseVO.getEndTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.teacher = null;
+		this.description = courseVO.getDescription();
+		this.reportPercentage = courseVO.getProportions().getReport();
+		this.presentationPercentage = courseVO.getProportions().getPresentation();
+		this.fivePointPercentage = courseVO.getProportions().getA();
+		this.fourPointPercentage = courseVO.getProportions().getB();
+		this.threePointPercentage = courseVO.getProportions().getC();
+	}
+
+	public Course(CourseVO courseVO, User teacher) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		this.id = null;
+		this.name = courseVO.getName();
+		try {
+			this.startDate = simpleDateFormat.parse(courseVO.getStartTime());
+			this.endDate = simpleDateFormat.parse(courseVO.getEndTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.teacher = teacher;
+		this.description = courseVO.getDescription();
+		this.reportPercentage = courseVO.getProportions().getReport();
+		this.presentationPercentage = courseVO.getProportions().getPresentation();
+		this.fivePointPercentage = courseVO.getProportions().getA();
+		this.fourPointPercentage = courseVO.getProportions().getB();
+		this.threePointPercentage = courseVO.getProportions().getC();
+	}
+
+	public Course() {
+	}
+
+	public Course(BigInteger id, String name, Date startDate, Date endDate,
+				  User teacher, String description, Integer reportPercentage,
+				  Integer presentationPercentage, Integer fivePointPercentage,
+				  Integer fourPointPercentage, Integer threePointPercentage) {
+		this.id = id;
+		this.name = name;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.teacher = teacher;
+		this.description = description;
+		this.reportPercentage = reportPercentage;
+		this.presentationPercentage = presentationPercentage;
+		this.fivePointPercentage = fivePointPercentage;
+		this.fourPointPercentage = fourPointPercentage;
+		this.threePointPercentage = threePointPercentage;
+	}
+
 	public BigInteger getId() {
 		return id;
 	}

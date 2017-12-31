@@ -32,14 +32,5 @@ public class StudentScoreGroup {
 	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
-
-	@Override
-	public String toString() {
-		return "StudentScoreGroup{" +
-				"id=" + id +
-				", student=" + student +
-				", seminarGroupTopic=" + seminarGroupTopic +
-				", grade=" + grade +
-				'}';
-	}
+	
 }

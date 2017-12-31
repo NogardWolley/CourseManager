@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import xmu.crms.entity.*;
 import xmu.crms.service.SeminarGroupService;
-//import xmu.crms.view.vo.SeminarGradeDetailVO;
+//import xmu.crms.view.vo.SeminarGradeDetailOrignalVO;
 
 import java.math.BigInteger;
 import java.util.List;

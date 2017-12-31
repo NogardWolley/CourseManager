@@ -1,94 +1,51 @@
 package xmu.crms.vo;
 
-import java.util.ArrayList;
+import xmu.crms.entity.SeminarGroup;
 
+import java.math.BigInteger;
+
+/**
+ *
+ * @author YellowPure
+ * @date 12:03 2017/12/27
+ */
 public class GroupVO {
-	Integer id;
-	String name;
-	UserVO leader;
-	ArrayList<UserVO> members;
-	TopicVO topics;
-	String report;
-	SeminarGradeVO grade;
-	public GroupVO(Integer id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
-	public GroupVO(Integer id, String name, UserVO leader, ArrayList<UserVO> members, TopicVO topics) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.leader = leader;
-		this.members = members;
-		this.topics = topics;
-	}
-	public GroupVO(Integer id, String name, TopicVO topics) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.topics = topics;
-	}
-	public GroupVO(Integer id, TopicVO topics) {
-		super();
-		this.id = id;
-		this.topics = topics;
-	}
-	public GroupVO(Integer id, UserVO leader, ArrayList<UserVO> members, TopicVO topics, String report) {
-		super();
-		this.id = id;
-		this.leader = leader;
-		this.members = members;
-		this.topics = topics;
-		this.report = report;
-	}
-	public GroupVO(Integer id) {
-		super();
-		this.id = id;
-	}
-	public GroupVO(Integer id, UserVO leader, ArrayList<UserVO> members) {
-		super();
-		this.id = id;
-		this.leader = leader;
-		this.members = members;
-	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public UserVO getLeader() {
-		return leader;
-	}
-	public void setLeader(UserVO leader) {
-		this.leader = leader;
-	}
-	
-	
-	public ArrayList<UserVO> getMembers() {
-		return members;
-	}
-	public void setMembers(ArrayList<UserVO> members) {
-		this.members = members;
-	}
-	public TopicVO getTopics() {
-		return topics;
-	}
-	public void setTopics(TopicVO topics) {
-		this.topics = topics;
-	}
-	public String getReport() {
-		return report;
-	}
-	public void setReport(String report) {
-		this.report = report;
-	}
-	public SeminarGradeVO getGrade() {
-		return grade;
-	}
-	public void setGrade(SeminarGradeVO grade) {
-		this.grade = grade;
-	}
 
+    private BigInteger id;
+    private String name;
+
+
+    public GroupVO(SeminarGroup seminarGroup) {
+        this.id = seminarGroup.getId();
+        this.name = seminarGroup.getName();
+    }
+
+    public GroupVO(BigInteger id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

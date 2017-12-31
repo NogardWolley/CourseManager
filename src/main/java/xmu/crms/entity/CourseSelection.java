@@ -26,12 +26,4 @@ public class CourseSelection {
 		this.student = student;
 	}
 
-	@Override
-	public String toString() {
-		return "CourseSelection{" +
-				"id=" + id +
-				", classInfo=" + classInfo +
-				", student=" + student +
-				'}';
-	}
 }

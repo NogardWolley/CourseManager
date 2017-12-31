@@ -7,7 +7,7 @@ public class CourseClassVO {
 	String time;
 	String site;
 	String courseName;
-	TeacherVO courseTeacherVO;
+	TeacherOrignalVO courseTeacherOrignalVO;
 	public CourseClassVO(Integer id, String name) {
 		super();
 		this.id = id;
@@ -49,10 +49,10 @@ public class CourseClassVO {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-	public TeacherVO getCourseTeacherVO() {
-		return courseTeacherVO;
+	public TeacherOrignalVO getCourseTeacherOrignalVO() {
+		return courseTeacherOrignalVO;
 	}
-	public void setCourseTeacherVO(TeacherVO courseTeacherVO) {
-		this.courseTeacherVO = courseTeacherVO;
+	public void setCourseTeacherOrignalVO(TeacherOrignalVO courseTeacherOrignalVO) {
+		this.courseTeacherOrignalVO = courseTeacherOrignalVO;
 	}
 }
