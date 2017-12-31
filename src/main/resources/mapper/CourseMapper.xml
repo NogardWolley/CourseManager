@@ -85,7 +85,7 @@
             four_point_percentage,
             three_point_percentage
         FROM course
-        WHERE teacher_id = #{id}
+        WHERE teacher_id = #{userId}
     </select>
 
     <insert id="insertCourseByUserId" parameterType="xmu.crms.entity.Course" useGeneratedKeys="true" keyProperty="id">
@@ -140,7 +140,7 @@
 
     <delete id="deleteCourseByCourseId" parameterType="java.math.BigInteger">
         DELETE FROM course
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{courseId,jdbcType=BIGINT}
     </delete>
 
     <select id="listCourseByCourseName" parameterType="java.lang.String" resultMap="CourseList">
