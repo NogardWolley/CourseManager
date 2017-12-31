@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace用来指定该xml文件对应的interface  -->
+<!-- 默认idea对于该xml文件是几乎没有任何提示的，需要装一个叫 mybatis free plugins 的插件 -->
+<mapper namespace="xmu.crms.mapper.LoginMapper">
+
+    <!-- id 就是方法名称 -->
+    <!-- resultType 指定返回的类型，如果返回多个，一样只要指定这个类型,mybatis会自动生成一个list-->
+    <!-- #{xxx}是参数的名称，参数会被填到这个位置 -->
+    <select id="signInWeChat" resultType="xmu.crms.entity.User">
+    </select>
+    
+     <select id="signInPhone" parameterType="xmu.crms.entity.User" resultType="xmu.crms.entity.User">
+        SELECT 
+        id, phone, wechat_id,openid,avatar,password,name,school_id,gender,type,number,education,title,email 
+        FROM user_info
+        WHERE phone = #{user.phone} AND password=#{user.password};
+    </select>
+    
+    <insert id="signUpPhone"  parameterType="xmu.crms.entity.User" useGeneratedKeys="true" keyProperty="id" >
+    INSERT INTO user_info(phone, password,name,school_id,gender,type,number,email)
+        VALUES (#{user.phone},#{user.password},#{user.name},#{user.school.id},#{user.gender},#{user.type},#{user.number},#{user.email});
+    </insert>
+    
+
+    <delete id="deleteTeacherAccount"  >
+        DELETE 
+        FROM
+        user_info
+        WHERE id=#{userId} AND type=1;
+    </delete>
+    
+     <delete id="deleteStudentAccount"  >
+        DELETE 
+        FROM
+        user_info
+        WHERE id=#{userId} AND type=0;
+    </delete>
+    
+    
+</mapper>

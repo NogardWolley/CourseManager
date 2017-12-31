@@ -1,0 +1,12 @@
+本组（2-6）完成service：FixGroupSrvice,CourseService,ClassService
+其余service:
+1-1  UserService：15  
+1-1  GradeService: 15
+1-11 SeminarGroupService：26
+2-11 SeminarService：8
+3-1  TopicService：13
+3-1  SchoolService：5
+3-4  TimerService：10
+2-3  LoginService: 15
+2-3  Exception：5
+1-1  AuthSeervice:

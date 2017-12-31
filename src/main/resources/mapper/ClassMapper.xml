@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.crms.mapper.ClassMapper">
+
+    <resultMap id="resultClassInfo" type="ClassInfo">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="site" property="site"/>
+        <result column="class_time" property="classTime"/>
+        <result column="description" property="description"/>
+        <result column="report_percentage" property="reportPercentage"/>
+        <result column="presentation_percentage" property="presentationPercentage"/>
+        <result column="five_point_percentage" property="fivePointPercentage"/>
+        <result column="four_point_percentage" property="fourPointPercentage"/>
+        <result column="three_point_percentage" property="threePointPercentage"/>
+        <association property="course" column="course_id" javaType="Course"
+                     select="CommonMapper.selectCourse"/>
+    </resultMap>
+
+
+    <resultMap id="resultLocation" type="Location">
+        <result column="id" property="id"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+        <result column="status" property="status"/>
+        <association property="course" column="course_id" javaType="Course"
+                     select="CommonMapper.selectCourse"/>
+        <association property="seminar" column="seminar_id" javaType="Seminar"
+                     select="CommonMapper.selectSeminar"/>
+        <association property="classInfo" column="class_id" javaType="ClassInfo"
+                     select="CommonMapper.selectClassInfo"/>
+    </resultMap>
+
+    <resultMap id="resultCourseSelection" type="CourseSelection">
+        <association property="classInfo" column="class_id" javaType="ClassInfo"
+                     select="CommonMapper.selectClassInfo"/>
+    </resultMap>
+
+
+
+
+    <delete id="deleteClassSelectionByClassId" parameterType="BigInteger">
+        DELETE FROM course_selection
+        WHERE class_id=#{classId}
+    </delete>
+
+    <delete id="deleteClassByCourseId" parameterType="BigInteger">
+        DELETE FROM class_info
+        WHERE course_id = #{courseId}
+    </delete>
+    <select id="findTeacherIdByteacherName" parameterType="String" resultType="User">
+      SELECT id FROM user_info
+      WHERE type = 1
+      AND `name`=#{teacherName}
+    </select>
+
+    <select id="findCourseIdByteacherIdAndCourseName" resultType="Course">
+        SELECT id FROM course
+        WHERE teacher_id = #{teacherId}
+        AND `name` = #{courseName}
+    </select>
+
+    <select id="findClassByCourseId" parameterType="BigInteger" resultMap="resultClassInfo">
+      SELECT id,
+              `name`,
+              course_id,
+              description,
+              site,
+              class_time,
+              report_percentage,
+              presentation_percentage,
+              five_point_percentage,
+              four_point_percentage,
+              three_point_percentage
+      FROM class_info
+      WHERE course_id = #{courseId}
+    </select>
+
+    <select id="findClassByClassId" parameterType="BigInteger" resultMap="resultClassInfo">
+        SELECT id,
+        `name`,
+        course_id,
+        description,
+        site,
+        class_time,
+        report_percentage,
+        presentation_percentage,
+        five_point_percentage,
+        four_point_percentage,
+        three_point_percentage
+        FROM class_info
+        WHERE id = #{classId}
+    </select>
+
+    <update id="updateClassByClassId" parameterType="xmu.crms.entity.ClassInfo">
+        UPDATE class_info
+        set `name` = #{name},
+            description = #{description},
+            site = #{site},
+            class_time = #{classTime},
+            report_percentage = #{reportPercentage},
+            presentation_percentage = #{presentationPercentage},
+            five_point_percentage = #{fivePointPercentage},
+            four_point_percentage = #{fivePointPercentage},
+            three_point_percentage = #{threePointPercentage}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteClassByClassId" parameterType="BigInteger">
+        DELETE FROM class_info
+        WHERE id=#{classId}
+    </delete>
+
+    <insert id="insertCourseSelectionById" keyProperty="id" useGeneratedKeys="true" parameterType="CourseSelection">
+        INSERT INTO course_selection(class_id,student_id)
+        VALUES (#{classInfo.id},#{student.id})
+    </insert>
+
+    <select id="findStudentdByStudentId" parameterType="BigInteger" resultType="User">
+        SELECT id FROM user_info
+        WHERE type = 0
+        AND id = #{studentId}
+    </select>
+
+    <delete id="deleteCourseSelectionById" parameterType="BigInteger">
+        DELETE FROM course_selection
+        WHERE class_id = #{classId}
+        AND student_id = #{userId}
+    </delete>
+
+    <select id="findTeacherByTeacherId" parameterType="BigInteger" resultType="User">
+        SELECT id FROM user_info
+        WHERE type = 1
+        AND id = #{teacherId}
+    </select>
+
+    <select id="findCourseByCourseId" parameterType="BigInteger" resultType="Course">
+        SELECT id FROM course
+        WHERE id = #{courseId}
+    </select>
+
+    <select id="findCourseIdByUserIdAndClassId" parameterType="BigInteger" resultType="BigInteger">
+        SELECT id FROM course_selection
+        WHERE class_id = #{classId}
+        AND student_id = #{userId}
+    </select>
+
+    <select id="findSeminarById"  parameterType="java.math.BigInteger" resultMap="CommonMapper.seminarResultMap">
+        SELECT id FROM seminar
+        WHERE id = #{seminarId}
+    </select>
+
+    <select id="getCallStatusById" parameterType="BigInteger" resultMap="resultLocation">
+        SELECT id,
+                class_id,
+                seminar_id,
+                longitude,
+                latitude,
+                status
+        FROM location
+        WHERE seminar_id = #{seminarId}
+        AND class_id = #{classId}
+    </select>
+
+    <insert id="insertClassById" keyProperty="id" parameterType="ClassInfo" useGeneratedKeys="true">
+        INSERT INTO class_info
+        (`name`,
+        course_id,
+        description,
+        site,
+        class_time,
+        report_percentage,
+        presentation_percentage,
+        five_point_percentage,
+        four_point_percentage,
+        three_point_percentage)
+        VALUES (#{name},
+                 #{course.id},
+                 #{description},
+                 #{site},
+                 #{classTime},
+                 #{reportPercentage},
+                 #{presentationPercentage},
+                 #{fivePointPercentage},
+                 #{fourPointPercentage},
+                 #{threePointPercentage})
+    </insert>
+
+    <update id="deleteScoreRuleById">
+        update class_info
+        SET report_percentage = NULL,
+            presentation_percentage = NULL,
+            five_point_percentage = NULL,
+            four_point_percentage = NULL,
+            three_point_percentage = NULL
+    </update>
+
+
+    <select id="getScoreRule" parameterType="BigInteger" resultMap="resultClassInfo">
+        SELECT id,
+        report_percentage,
+        presentation_percentage,
+        five_point_percentage,
+        four_point_percentage,
+        three_point_percentage
+        FROM class_info
+        WHERE id = #{classId}
+    </select>
+
+    <update id="insertScoreRule" keyProperty="id" useGeneratedKeys="true" parameterType="ClassInfo">
+        UPDATE class_info
+        SET report_percentage = #{reportPercentage},
+        presentation_percentage = #{presentationPercentage},
+        five_point_percentage = #{fivePointPercentage},
+        four_point_percentage = #{fourPointPercentage},
+        three_point_percentage = #{threePointPercentage}
+        WHERE id = #{id}
+    </update>
+
+    <insert id="CallInRollById" keyProperty="id" useGeneratedKeys="true" parameterType="Location">
+        INSERT INTO location
+        (class_id,seminar_id,longitude,latitude,status)
+        VALUES (#{classInfo.id},#{seminar.id},#{longitude},#{latitude},1)
+    </insert>
+
+    <select id="findClassByUserId" resultMap="resultCourseSelection">
+        SELECT class_id FROM course_selection WHERE
+        student_id = #{userId}
+    </select>
+
+    <update id="endCallRollById" parameterType="Location">
+        UPDATE location SET
+        status = 0
+        WHERE seminar_id = #{seminar.id}
+        AND class_id = #{classInfo.id}
+    </update>
+
+    <delete id="deleteCoueseSelectionByClassId">
+        DELETE FROM course_selection
+        WHERE class_id = #{classId}
+    </delete>
+
+</mapper>

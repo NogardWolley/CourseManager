@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.crms.mapper.TimerMapper">
+<select id="listExecutableEvents" resultMap="ExecutableEvents">
+  SELECT id,time,bean_name,method_name,parameter
+    FROM event
+    WHERE time BETWEEN NOW()-INTERVAL 10 MINUTE AND NOW()
+</select>
+
+    <select id="getEventByEventId" resultMap="ExecutableEvents">
+        SELECT id,time,bean_name,method_name,parameter
+        FROM event
+        WHERE id=#{id}
+    </select>
+
+    <insert id="insertEvent" parameterType="Event">
+        SELECT id,time,bean_name,method_name,parameter
+        FROM event
+        WHERE id=#{id}
+    </insert>
+
+    <delete id="deleteEvent">
+        DELETE FROM event
+        WHERE id=#{eventId}
+    </delete>
+
+    <update id="updateEvent" parameterType="Event">
+        UPDATE event
+        SET time=#{time}
+        WHERE id=#{id}
+    </update>
+
+    <resultMap id="ExecutableEvents" type="xmu.crms.entity.Event">
+        <id column="id" property="id" javaType="java.math.BigInteger"/>
+        <result column="time" property="time" javaType="java.util.Date"/>
+        <result column="bean_name" property="beanName"/>
+        <result column="method_name" property="methodName"/>
+        <result column="parameter" property="parameter"/>
+    </resultMap>
+</mapper>

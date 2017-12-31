@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xmu.crms.mapper.SeminarGroupMapper" >
+    <resultMap id="BaseResultMap" type="xmu.crms.entity.SeminarGroup" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="report_grade" property="reportGrade" jdbcType="INTEGER" />
+        <result column="presentation_grade" property="presentationGrade" jdbcType="INTEGER" />
+        <result column="final_grade" property="finalGrade" jdbcType="INTEGER" />
+        <result column="report" property="report" jdbcType="VARCHAR" />
+        <association property="seminar" javaType="xmu.crms.entity.Seminar"
+                     select="CommonMapper.selectSeminar" column="seminar_id">
+        </association>
+        <association property="classInfo" javaType="xmu.crms.entity.ClassInfo"
+                     select="CommonMapper.selectClassInfo" column="class_id">
+        </association>
+        <association property="leader" javaType="xmu.crms.entity.User"
+                     select="CommonMapper.selectUser" column="leader_id">
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, seminar_id, report_grade, presentation_grade, final_grade,
+        report, class_id, leader_id
+    </sql>
+    <select id="selectSeminarGroupByGroupId" resultMap="BaseResultMap" parameterType="java.math.BigInteger" >
+        select
+        <include refid="Base_Column_List" />
+        from seminar_group
+        where id = #{seminarGroupId,jdbcType=BIGINT}
+    </select>
+    <select id="getSeminarGroupLeaderByGroupId" resultMap="BaseResultMap" parameterType="java.math.BigInteger" >
+        select  <include refid="Base_Column_List" />
+        from seminar_group
+        where id = #{groupId,jdbcType=BIGINT}
+    </select>
+    <select id="listSeminarGroupBySeminarId" resultMap="BaseResultMap" parameterType="java.math.BigInteger" >
+        select
+        <include refid="Base_Column_List" />
+        from seminar_group
+        where seminar_id = #{seminarId,jdbcType=BIGINT}
+    </select>
+    <select id="listSeminarGroupById" resultMap="BaseResultMap"  >
+        select
+        <include refid="Base_Column_List" />
+        from seminar_group
+        where seminar_id = #{arg0,jdbcType=BIGINT} AND class_id=#{arg1}
+    </select>
+    <delete id="deleteSeminarGroupBySeminarId" parameterType="java.math.BigInteger" >
+        delete from seminar_group
+        where seminar_id = #{seminarId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteSeminarGroupByGroupId" parameterType="java.math.BigInteger" >
+        delete from seminar_group
+        where id = #{seminarGroupId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insertSeminarGroupBySeminarId" useGeneratedKeys="true" keyProperty="seminarGroup.id">
+        insert into seminar_group (id,seminar_id, report_grade, presentation_grade,
+        final_grade, report, class_id,
+        leader_id)
+        values (#{seminarGroup.id,jdbcType=BIGINT},#{seminarId,jdbcType=BIGINT}, #{seminarGroup.reportGrade,jdbcType=INTEGER}, #{seminarGroup.presentationGrade,jdbcType=INTEGER},
+        #{seminarGroup.finalGrade,jdbcType=INTEGER}, #{seminarGroup.report,jdbcType=VARCHAR}, #{classId,jdbcType=BIGINT},
+        #{seminarGroup.leader.id,jdbcType=BIGINT})
+    </insert>
+    <select id="getSeminarGroupById" resultMap="BaseResultMap"  >
+        select  seminar_group.id, seminar_id, report_grade, presentation_grade, final_grade,
+        report, class_id, leader_id
+        from seminar_group,seminar_group_member
+        where seminar_group_member.student_id = #{userId,jdbcType=BIGINT} AND seminar_group.seminar_id= #{seminarId,jdbcType=BIGINT}
+        AND seminar_group_member.seminar_group_id=seminar_group.id
+    </select>
+    <select id="selectSeminarGroupByTopicId" resultMap="BaseResultMap"  parameterType="java.math.BigInteger">
+        select seminar_group.id, seminar_id, report_grade,seminar_group.presentation_grade, final_grade,
+        report, class_id, leader_id
+        from seminar_group,seminar_group_topic
+        where seminar_group_topic.topic_id = #{topicId,jdbcType=BIGINT} AND seminar_group_topic.seminar_group_id=seminar_group.id
+    </select>
+    <update id="updateSeminarGroupById" >
+        update seminar_group
+        set
+        leader_id = #{userId,jdbcType=BIGINT}
+        where id = #{groupId,jdbcType=BIGINT}
+    </update>
+    <update id="resignLeaderById" >
+        update seminar_group
+        set
+        leader_id = NULL
+        where id = #{groupId,jdbcType=BIGINT}
+    </update>
+    <select id="selectSeminarGroupNotHaveTopic" resultMap="BaseResultMap">
+        SELECT seminar_group.id, seminar_id, report_grade,seminar_group.presentation_grade, final_grade,
+        report, class_id, leader_id
+        FROM seminar_group_topic,seminar_group
+        WHERE topic_id=NULL AND seminar_id=#{seminarId} AND seminar_group_topic.seminar_group_id=seminar_group.id
+    </select>
+</mapper>
