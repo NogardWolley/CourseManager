@@ -1,17 +1,19 @@
 package xmu.crms.vo;
+import java.math.BigInteger;
 import java.util.ArrayList;
 public class AttendanceListOrignalVO {
-	Integer id;
+	BigInteger id;
 	String name;
-	public AttendanceListOrignalVO(Integer id, String name) {
+	public AttendanceListOrignalVO(){}
+	public AttendanceListOrignalVO(BigInteger id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
-	public Integer getId() {
+	public BigInteger getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 	public String getName() {
