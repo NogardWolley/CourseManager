@@ -251,20 +251,23 @@ public class SeminarController {
     public ResponseEntity getAttendanceStatus(@PathVariable int seminarId,@PathVariable int classId){
         List<Attendance> list1=attendanceMapper.ListPresentAttendance(BigInteger.valueOf(seminarId),BigInteger.valueOf(classId));
         List<CourseSelection>list2=attendanceMapper.CountStuNumByClassId(BigInteger.valueOf(classId));
-        AttendanceVO attendanceVO=null;
-        attendanceVO.setNumPresent(list1.size());
-        attendanceVO.setNumStudent(list2.size());
-        Location location=null;
+
+//        attendanceVO.setNumPresent(list1.size());
+//        attendanceVO.setNumStudent(list2.size());
+        System.out.println(list1.size());
+        System.out.println(list2.size());
+        Location location=new Location();
         try{
             location=classService.getCallStatusById(BigInteger.valueOf(classId),BigInteger.valueOf(seminarId));
         }catch (SeminarNotFoundException e){
             e.printStackTrace();
             return ResponseEntity.status(404).build();
         }
-        if(location.getStatus().equals(0)) attendanceVO.setStatus("END");
-        else if(location.getStatus().equals(1))attendanceVO.setStatus("CALLING");
-        else attendanceVO.setStatus("BACK");
-        attendanceVO.setGroup("grouping");
+//        if(location.getStatus().equals(0)) attendanceVO.setStatus("END");
+//        else if(location.getStatus().equals(1))attendanceVO.setStatus("CALLING");
+//        else attendanceVO.setStatus("BACK");
+//        attendanceVO.setGroup("grouping");
+        AttendanceVO attendanceVO=new AttendanceVO(location,list1.size(),list2.size());
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(attendanceVO);
     }
 }

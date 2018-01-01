@@ -24,6 +24,13 @@ public class AttendanceVO {
         this.group = group;
     }
 
+    public AttendanceVO(int numPresent, int numStudent) {
+        this.numPresent = numPresent;
+        this.numStudent = numStudent;
+        this.status = status;
+        this.group = group;
+    }
+
     public int getNumPresent() {
         return numPresent;
     }
