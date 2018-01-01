@@ -22,7 +22,7 @@
         SELECT id, phone, password, `type`, `name` from user_info WHERE school_id = #{arg0} AND number = #{arg1}
     </select>
 
-    <delete id="deleteUserById">
+    <delete id="deleteUserbyId">
         DELETE FROM user_info WHERE id = #{id}
     </delete>
 
@@ -31,7 +31,7 @@
         VALUES (#{phone}, #{password}, #{name}, #{school.id}, #{gender}, #{type}, #{number}, #{email})
     </insert>
 
-    <insert id="insertUserWithWechat" parameterType="xmu.crms.entity.User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="createUserWithWechat" parameterType="xmu.crms.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_info(wechat_id) VALUES (#{wechatId})
     </insert>
 
