@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xmu.crms.dao.LoginDAO;
+import xmu.crms.dao.LoginDao;
 import xmu.crms.entity.User;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.service.LoginService;
@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
     private UserMapper userMapper;
 
     @Autowired
-    private LoginDAO loginDAO;
+    private LoginDao loginDAO;
 
     @Value("${wechat.mp.appid}")
     private String appid;

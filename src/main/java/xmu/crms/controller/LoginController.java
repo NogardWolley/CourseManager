@@ -147,6 +147,7 @@ public class LoginController {
         }
         // 使用finally块来关闭输入流
         finally {
+            System.out.println("in the shit");
             if (in!= null) {
                 try {
                     in.close();
@@ -156,7 +157,8 @@ public class LoginController {
             }
         }
         if(openid!=null){
-        User user=userMapper.getUserByUserId(userMapper.getUserByOpenId(openid).getId());
+            System.out.println(openid);
+        User user=userMapper.getUserByUserId(userMapper.getUserByOpenIdReturnUser(openid).getId());
         if(user==null){
             return new LoginSuccessVO(openid);
         } else{

@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * @author LuLongfei
  */
 @Repository
-public class LoginDAO {
+public class LoginDao {
     @Autowired
     private LoginMapper loginMapper;
 

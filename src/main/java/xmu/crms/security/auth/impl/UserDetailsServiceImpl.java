@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import xmu.crms.dao.LoginDAO;
+import xmu.crms.dao.LoginDao;
 import xmu.crms.entity.User;
 
 import java.net.URL;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Qualifier("customUserDetailsService")
 public class UserDetailsServiceImpl implements xmu.crms.security.auth.UserDetailsService {
     @Autowired
-    private LoginDAO loginDAO;
+    private LoginDao loginDAO;
 
     @Value("${wechat.mp.appid}")
     private String appid;

@@ -164,4 +164,6 @@ public interface UserMapper {
      * @return
      */
     UserDetailsImpl getUserByOpenId(@Param("openid") String openid);
+
+    User getUserByOpenIdReturnUser(@Param("openid") String openid);
 }
