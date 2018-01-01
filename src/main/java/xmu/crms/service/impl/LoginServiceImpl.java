@@ -47,30 +47,44 @@ public class LoginServiceImpl implements LoginService {
     private static final String KEY_ERR_CODE = "errcode";
 
     @Override
-    public User signInWeChat(BigInteger userId, String code, String state, String successUrl) throws UserNotFoundException {
-        User val = null;
-        try {
-            String urlString = String.format("https://api.weixin.qq.com/sns/jscode2session?" +
-                            "appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
-                    appid, secret, code);
-            URL url = new URL(urlString);
-            // json解析
-            ObjectMapper mapper = new ObjectMapper();
-            // 请求接口获取结果并进行json解析
-            Map<String, Object> map = mapper.readValue(url, Map.class);
-            if (map.get(KEY_OPEN_ID) != null) {
-                val = loginDAO.getUserLoginByWechat(map.get(KEY_OPEN_ID).toString());
-            } else if (map.get(KEY_ERR_CODE) != null) {
-                val = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public User signInWeChat(User user) throws UserNotFoundException {
+        User u=loginDAO.getUserBySchoolAndNumber(user.getSchool().getId(),user.getNumber());
+        System.out.println("11111111"+u);
+        if(u==null){
+            userService.createStudentAccountByNumber(user);
         }
-        if (val == null) {
-            throw new UserNotFoundException();
+        else {
+            userService.updateUserByUserId(u.getId(),user);
         }
-        return val;
+        u=loginDAO.getUserBySchoolAndNumber(user.getSchool().getId(),user.getNumber());
+        return u;
     }
+
+//    @Override
+//    public User signInWeChat(BigInteger userId, String code, String state, String successUrl) throws UserNotFoundException {
+//        User val = null;
+//        try {
+//            String urlString = String.format("https://api.weixin.qq.com/sns/jscode2session?" +
+//                            "appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
+//                    appid, secret, code);
+//            URL url = new URL(urlString);
+//            // json解析
+//            ObjectMapper mapper = new ObjectMapper();
+//            // 请求接口获取结果并进行json解析
+//            Map<String, Object> map = mapper.readValue(url, Map.class);
+//            if (map.get(KEY_OPEN_ID) != null) {
+//                val = loginDAO.getUserLoginByWechat(map.get(KEY_OPEN_ID).toString());
+//            } else if (map.get(KEY_ERR_CODE) != null) {
+//                val = null;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        if (val == null) {
+//            throw new UserNotFoundException();
+//        }
+//        return val;
+//    }
 
     @Override
     public User signInPhone(User user) throws UserNotFoundException {

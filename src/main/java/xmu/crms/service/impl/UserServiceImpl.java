@@ -157,4 +157,8 @@ public class UserServiceImpl implements UserService {
         }
         return courses;
     }
+    @Override
+    public void createStudentAccountByNumber(User user){
+        userMapper.insertUser(user);
+    }
 }

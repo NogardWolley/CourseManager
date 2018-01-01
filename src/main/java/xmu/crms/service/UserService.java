@@ -172,4 +172,6 @@ public interface UserService {
 	 * @exception UserNotFoundException
 	 */
 	List<Course> listCourseByTeacherName(String teacherName) throws UserNotFoundException, CourseNotFoundException;
+
+	void createStudentAccountByNumber(User user);
 }

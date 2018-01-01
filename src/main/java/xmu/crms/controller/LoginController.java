@@ -81,7 +81,7 @@ public class LoginController {
             school.setId(schoolId);
             user.setSchool(school);
             user.setNumber(number);
-//            user=loginService.signInWeChat(user,);
+            user=loginService.signInWeChat(user);
         }
 
         String jwt = jwtService.generateJwt(user);
@@ -110,8 +110,8 @@ public class LoginController {
         String openid=null;
         try {
             StringBuilder result =new StringBuilder();
-            String appid = "wx57e13e3a357301c4";
-            String secret = "14b7cb557cbd1e042daeb1a70919cb99";
+            String appid = "wx05f27a5e70a15d8f";
+            String secret = "893904dd25223c0534e1242bf3c8a929";
             String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appid + "&secret=" + secret
                     + "&js_code=" + code + "&grant_type=authorization_code";
             URL realurl = new URL(url);
