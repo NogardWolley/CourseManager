@@ -24,7 +24,23 @@
         FROM Attendance
         WHERE seminar_id=#{seminar_id,jdbcType=BIGINT}
         AND class_id=#{class_id,jdbcType=BIGINT}
+        AND attendance_status=0
+    </select>
+
+    <select id="ListLateAttendance" resultMap="AttendanceMap">
+        SELECT id,student_id,seminar_id,class_id,attendance_status
+        FROM Attendance
+        WHERE seminar_id=#{seminar_id,jdbcType=BIGINT}
+        AND class_id=#{class_id,jdbcType=BIGINT}
         AND attendance_status=1
+    </select>
+
+    <select id="ListAbsentAttendance" resultMap="AttendanceMap">
+        SELECT id,student_id,seminar_id,class_id,attendance_status
+        FROM Attendance
+        WHERE seminar_id=#{seminar_id,jdbcType=BIGINT}
+        AND class_id=#{class_id,jdbcType=BIGINT}
+        AND attendance_status=2
     </select>
 
     <select id="CountStuNumByClassId" resultMap="CourseSelectionMap">
@@ -32,6 +48,10 @@
         FROM course_selection
         WHERE class_id=#{class_id,jdbcType=BIGINT}
     </select>
+
+    <insert id="insertAttendance" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO attendance(student_id,seminar_id,class_id,attendance_status)VALUES (#{student_id},#{seminar_id},#{class_id},#{status})
+    </insert>
 
 
 

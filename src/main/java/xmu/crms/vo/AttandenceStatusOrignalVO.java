@@ -5,6 +5,7 @@ public class AttandenceStatusOrignalVO {
 	Integer numStudent;
 	String status;
 	String group;
+
 	public AttandenceStatusOrignalVO(Integer numPresent, Integer numStudent, String status, String group) {
 		super();
 		this.numPresent = numPresent;

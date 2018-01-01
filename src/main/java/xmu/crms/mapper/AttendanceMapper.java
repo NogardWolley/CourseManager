@@ -21,12 +21,24 @@ import java.util.List;
 public interface AttendanceMapper {
     /**
      * @Author:YellowDragon
-     * @Description:按classid和seminarId获取Attendance
+     * @Description:按classid和seminarId获取当前已签到Attendance
      */
     List<Attendance> ListPresentAttendance(@Param("seminar_id") BigInteger seminarId,@Param("class_id") BigInteger classId);
+    /**
+     * @Author:YellowDragon
+     * @Description:按classid和seminarId获取当前迟到Attendance
+     */
+    List<Attendance> ListLateAttendance(@Param("seminar_id") BigInteger seminarId,@Param("class_id") BigInteger classId);
+    /**
+     * @Author:YellowDragon
+     * @Description:按classid和seminarId获取当前缺席Attendance
+     */
+    List<Attendance> ListAbsentAttendance(@Param("seminar_id") BigInteger seminarId,@Param("class_id") BigInteger classId);
     /**
      * @Author:YellowDragon
      * @Description:获取该班级总人数
      */
     List<CourseSelection>CountStuNumByClassId(@Param("class_id")BigInteger clssId);
+
+    void insertAttendance(@Param("student_id")BigInteger studentId,@Param("class_id")BigInteger classId,@Param("seminar_id")BigInteger seminarId,@Param("status")Integer status);
 }

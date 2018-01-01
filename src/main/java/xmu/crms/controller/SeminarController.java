@@ -27,6 +27,7 @@ import xmu.crms.service.impl.SeminarServiceImpl;
 import xmu.crms.vo.*;
 import xmu.crms.mapper.AttendanceMapper;
 
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -251,9 +252,6 @@ public class SeminarController {
     public ResponseEntity getAttendanceStatus(@PathVariable int seminarId,@PathVariable int classId){
         List<Attendance> list1=attendanceMapper.ListPresentAttendance(BigInteger.valueOf(seminarId),BigInteger.valueOf(classId));
         List<CourseSelection>list2=attendanceMapper.CountStuNumByClassId(BigInteger.valueOf(classId));
-
-//        attendanceVO.setNumPresent(list1.size());
-//        attendanceVO.setNumStudent(list2.size());
         System.out.println(list1.size());
         System.out.println(list2.size());
         Location location=new Location();
@@ -263,11 +261,95 @@ public class SeminarController {
             e.printStackTrace();
             return ResponseEntity.status(404).build();
         }
-//        if(location.getStatus().equals(0)) attendanceVO.setStatus("END");
-//        else if(location.getStatus().equals(1))attendanceVO.setStatus("CALLING");
-//        else attendanceVO.setStatus("BACK");
-//        attendanceVO.setGroup("grouping");
         AttendanceVO attendanceVO=new AttendanceVO(location,list1.size(),list2.size());
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(attendanceVO);
+    }
+    /**
+     * @Author:YellowDragon
+     * @Description:按Id获得已签到名单
+     */
+    @PreAuthorize("hasRole('STUDENT')or hasRole('TEACHER')")
+    @RequestMapping(value = "/{seminarId}/class/{classId}/attendance/present", method = GET)
+    @ResponseBody
+    public ResponseEntity getAttendancePresent(@PathVariable int seminarId,@PathVariable int classId){
+        List<Attendance> list1=attendanceMapper.ListPresentAttendance(BigInteger.valueOf(seminarId),BigInteger.valueOf(classId));
+        AttendanceListOrignalVO attendanceListOrignalVO=new AttendanceListOrignalVO();
+        List<AttendanceListOrignalVO> attendanceListOrignalVOSlist=new ArrayList<AttendanceListOrignalVO>();
+        for(int i=0;i<list1.size();i++){
+            attendanceListOrignalVOSlist.add(new AttendanceListOrignalVO(list1.get(i).getStudent().getId(),list1.get(i).getStudent().getName()));
+        }
+        return ResponseEntity.status(200).body(attendanceListOrignalVOSlist);
+    }
+    /**
+     * @Author:YellowDragon
+     * @Description:按Id获得迟到名单
+     */
+    @PreAuthorize("hasRole('STUDENT')or hasRole('TEACHER')")
+    @RequestMapping(value = "/{seminarId}/class/{classId}/attendance/late", method = GET)
+    @ResponseBody
+    public ResponseEntity getAttendanceLate(@PathVariable int seminarId,@PathVariable int classId){
+        List<Attendance> list1=attendanceMapper.ListLateAttendance(BigInteger.valueOf(seminarId),BigInteger.valueOf(classId));
+        AttendanceListOrignalVO attendanceListOrignalVO=new AttendanceListOrignalVO();
+        List<AttendanceListOrignalVO> attendanceListOrignalVOSlist=new ArrayList<AttendanceListOrignalVO>();
+        for(int i=0;i<list1.size();i++){
+            attendanceListOrignalVOSlist.add(new AttendanceListOrignalVO(list1.get(i).getStudent().getId(),list1.get(i).getStudent().getName()));
+        }
+        return ResponseEntity.status(200).body(attendanceListOrignalVOSlist);
+    }
+
+    /**
+     * @Author:YellowDragon
+     * @Description:按Id获得迟到名单
+     */
+    @PreAuthorize("hasRole('STUDENT')or hasRole('TEACHER')")
+    @RequestMapping(value = "/{seminarId}/class/{classId}/attendance/absent", method = GET)
+    @ResponseBody
+    public ResponseEntity getAttendanceAbsent(@PathVariable int seminarId,@PathVariable int classId){
+        List<Attendance> list1=attendanceMapper.ListAbsentAttendance(BigInteger.valueOf(seminarId),BigInteger.valueOf(classId));
+        AttendanceListOrignalVO attendanceListOrignalVO=new AttendanceListOrignalVO();
+        List<AttendanceListOrignalVO> attendanceListOrignalVOSlist=new ArrayList<AttendanceListOrignalVO>();
+        for(int i=0;i<list1.size();i++){
+            attendanceListOrignalVOSlist.add(new AttendanceListOrignalVO(list1.get(i).getStudent().getId(),list1.get(i).getStudent().getName()));
+        }
+        return ResponseEntity.status(200).body(attendanceListOrignalVOSlist);
+    }
+    /**
+     * @Author:YellowDragon
+     * @Description:签到（上传位置信息）
+     */
+    @PreAuthorize("hasRole('STUDENT')")
+    @RequestMapping(value = "/{seminarId}/class/{classId}/attendance/{studentId}", method = PUT)
+    @ResponseBody
+    public ResponseEntity srudentCallInRoll(@PathVariable int seminarId,@PathVariable int classId,@RequestBody Map<String,Double> request){
+        BigInteger userId = (BigInteger) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Location location=new Location();
+        String status="null";
+        try{
+            location=classService.getCallStatusById(BigInteger.valueOf(classId),BigInteger.valueOf(seminarId));
+        }catch (SeminarNotFoundException e){
+            e.printStackTrace();
+            return ResponseEntity.status(404).build();
+        }
+        if(location.getStatus()==1) {
+            if (request.get("longitude") - location.getLongitude() < 0.05 && -0.05 < request.get("longitude") - location.getLongitude()) {
+                if (request.get("latitude") - location.getLatitude() < 0.05 && -0.05 < request.get("latitude") - location.getLatitude()){
+                    status="present";
+                    attendanceMapper.insertAttendance(userId,BigInteger.valueOf(classId),BigInteger.valueOf(seminarId),location.getStatus());
+                }
+            }
+        }
+        else if(location.getStatus()==0) {
+            if (request.get("longitude") - location.getLongitude() < 0.05 && -0.05 < request.get("longitude") - location.getLongitude()) {
+                if (request.get("latitude") - location.getLatitude() < 0.05 && -0.05 < request.get("latitude") - location.getLatitude()){
+                    status="late";
+                    attendanceMapper.insertAttendance(userId,BigInteger.valueOf(classId),BigInteger.valueOf(seminarId),location.getStatus());
+                }
+            }
+        }
+        else{
+            status="absent";
+            attendanceMapper.insertAttendance(userId,BigInteger.valueOf(classId),BigInteger.valueOf(seminarId),location.getStatus());
+        }
+        return ResponseEntity.status(400).body(status);
     }
 }
