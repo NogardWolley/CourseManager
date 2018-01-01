@@ -9,13 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.FixGroup;
+import xmu.crms.entity.FixGroupTopic;
 import xmu.crms.entity.User;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.UserNotFoundException;
-import xmu.crms.service.ClassService;
-import xmu.crms.service.FixGroupService;
-import xmu.crms.service.SeminarGroupService;
-import xmu.crms.service.UserService;
+import xmu.crms.service.*;
 import xmu.crms.vo.*;
 import xmu.crms.exception.*;
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +43,9 @@ public class classController {
 
     @Autowired
     SeminarGroupService seminarGroupService;
+
+    @Autowired
+    TopicService topicService;
     /**
      * 获取可以选的课程
      *
@@ -411,28 +412,47 @@ public class classController {
         } catch (ClassesNotFoundException e) {
             return ResponseEntity.status(404).build();
         }
+
+
     }
 
+    /**
+     *班级小组按删除话题
+     * @author hj
+     * @date 12月31日
+     */
+    @PreAuthorize(" hasRole('STUDENT')")
+    @RequestMapping(value = "/{classId}/classgroup/topic/{topicId}", method = DELETE)
+    public  ResponseEntity chooseGroopTopic (@PathVariable Integer groupId,
+                                             @RequestBody TopicVO topicId){
+        BigInteger userId = (BigInteger) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        try {
+           topicService.deleteSeminarGroupTopicById(BigInteger.valueOf(groupId), topicId.getId());
+            return ResponseEntity.status(204).build();
+        }
+            catch(IllegalArgumentException e ){
+                return ResponseEntity.status(400).build();
+            }
+    }
+
+
 //    /**
-//     *班级小组按ID选择话题
+//     *班级小组Id选择话题
 //     * @author hj
 //     * @date 12月31日
 //     */
 //    @PreAuthorize(" hasRole('STUDENT')")
-//    @RequestMapping(value = "/{classId}/classgroup/remove", method = POST)
+//    @RequestMapping(value = "/{classId}/classgroup/topic", method = POST)
 //    public  ResponseEntity chooseGroopTopic (@PathVariable Integer groupId,
 //                                             @RequestBody TopicVO topicId){
-//
-//
-//
+//        BigInteger userId = (BigInteger) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        try {
+//            FixGroupTopic fixGroupTopic = topicService.deleteSeminarGroupTopicById(BigInteger.valueOf(groupId), topicId.getId())
+//            return ResponseEntity.status(201).build();
+//        }
+//        catch(IllegalArgumentException e ){
+//            return ResponseEntity.status(403).build();
+//        }
 //    }
-//
-//
-//
-//
-////    班级小组按删除话题
-//
-//
-
 
 }
