@@ -29,6 +29,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  * @author hj
  * @date 10:49 2017/12/31
  */
+@RequestMapping("/class")
 public class classController {
 
 
