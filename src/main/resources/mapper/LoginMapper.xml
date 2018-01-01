@@ -1,44 +1,48 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<!-- namespace用来指定该xml文件对应的interface  -->
-<!-- 默认idea对于该xml文件是几乎没有任何提示的，需要装一个叫 mybatis free plugins 的插件 -->
 <mapper namespace="xmu.crms.mapper.LoginMapper">
+    <resultMap id="loginUser" type="xmu.crms.entity.User">
+        <id column="id" property="id" javaType="java.math.BigInteger"/>
+        <result column="phone" property="phone"/>
+        <result column="password" property="password"/>
+        <result column="type" property="type"/>
+        <result column="name" property="name"/>
+    </resultMap>
 
-    <!-- id 就是方法名称 -->
-    <!-- resultType 指定返回的类型，如果返回多个，一样只要指定这个类型,mybatis会自动生成一个list-->
-    <!-- #{xxx}是参数的名称，参数会被填到这个位置 -->
-    <select id="signInWeChat" resultType="xmu.crms.entity.User">
+    <select id="getUserLoginByPhone" resultMap="loginUser">
+        SELECT id, phone, password, `type`, `name` from user_info WHERE phone = #{phone}
     </select>
-    
-     <select id="signInPhone" parameterType="xmu.crms.entity.User" resultType="xmu.crms.entity.User">
-        SELECT 
-        id, phone, wechat_id,openid,avatar,password,name,school_id,gender,type,number,education,title,email 
-        FROM user_info
-        WHERE phone = #{user.phone} AND password=#{user.password};
+
+    <select id="getUserLoginByWechat" resultMap="loginUser">
+        SELECT id, phone, password, `type`, `name` from user_info WHERE wechat_id = #{wechat}
     </select>
-    
-    <insert id="signUpPhone"  parameterType="xmu.crms.entity.User" useGeneratedKeys="true" keyProperty="id" >
-    INSERT INTO user_info(phone, password,name,school_id,gender,type,number,email)
-        VALUES (#{user.phone},#{user.password},#{user.name},#{user.school.id},#{user.gender},#{user.type},#{user.number},#{user.email});
+
+    <select id="getUserBySchoolAndNumber" resultMap="loginUser">
+        SELECT id, phone, password, `type`, `name` from user_info WHERE school_id = #{arg0} AND number = #{arg1}
+    </select>
+
+    <delete id="deleteUserById">
+        DELETE FROM user_info WHERE id = #{id}
+    </delete>
+
+    <insert id="createUserWithPhone" parameterType="xmu.crms.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_info(phone, password, `name`, school_id, gender, type, number, email)
+        VALUES (#{phone}, #{password}, #{name}, #{school.id}, #{gender}, #{type}, #{number}, #{email})
     </insert>
-    
 
-    <delete id="deleteTeacherAccount"  >
-        DELETE 
-        FROM
-        user_info
-        WHERE id=#{userId} AND type=1;
-    </delete>
-    
-     <delete id="deleteStudentAccount"  >
-        DELETE 
-        FROM
-        user_info
-        WHERE id=#{userId} AND type=0;
-    </delete>
-    
-    
+    <insert id="insertUserWithWechat" parameterType="xmu.crms.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_info(wechat_id) VALUES (#{wechatId})
+    </insert>
+
+    <insert id="createStudentAccountByNumber" parameterType="xmu.crms.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_info(number, type) VALUES (#{number}, #{type})
+    </insert>
+
+    <update id="addWechatToUser" parameterType="xmu.crms.entity.User">
+        UPDATE user_info SET wechat_id = #{wechatId} WHERE id = #{id}
+    </update>
+    <update id="addPhoneToUser" parameterType="xmu.crms.entity.User">
+        UPDATE user_info SET phone = #{phone}, password = #{password} WHERE id = #{id}
+    </update>
 </mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xmu.crms.mapper.AttendanceMapper">
+    <!--Attendance-->
+    <resultMap type="Attendance" id="AttendanceMap">
+    <id column="id" property="id"/>
+    <result column="attendance_status" property="attendanceStatus"/>
+    <association column="student_id" property="student" javaType="xmu.crms.entity.User" select="CommonMapper.selectUser"/>
+    <association column="seminar_id" property="seminar" javaType="xmu.crms.entity.Seminar" select="CommonMapper.selectSeminar"/>
+    <association column="class_id" property="classInfo" javaType="xmu.crms.entity.ClassInfo" select="CommonMapper.selectClassInfo"/>
+</resultMap>
+
+    <resultMap type="CourseSelection" id="CourseSelectionMap">
+        <id column="id" property="id"/>
+        <association column="class_id" property="classInfo" javaType="xmu.crms.entity.ClassInfo" select="CommonMapper.selectClassInfo"/>
+        <association column="student_id" property="student" javaType="xmu.crms.entity.User" select="CommonMapper.selectUser"/>
+    </resultMap>
+
+
+
+    <select id="ListPresentAttendance" resultMap="AttendanceMap">
+        SELECT id,student_id,seminar_id,class_id,attendance_status
+        FROM Attendance
+        WHERE seminar_id=#{seminar_id,jdbcType=BIGINT}
+        AND class_id=#{class_id,jdbcType=BIGINT}
+        AND attendance_status=1
+    </select>
+
+    <select id="CountStuNumByClassId" resultMap="CourseSelectionMap">
+        SELECT student_id
+        FROM course_selection
+        WHERE class_id=#{class_id,jdbcType=BIGINT}
+    </select>
+
+
+
+
+</mapper>

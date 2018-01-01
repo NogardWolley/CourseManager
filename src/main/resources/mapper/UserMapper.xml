@@ -187,4 +187,8 @@
     <select id="getUserByOpenId" parameterType="java.lang.String" resultMap="userDetailResultMap">
         select `id`, `phone`, `password`, `type`, `name`, `openid` from user_info where openid = #{openid}
     </select>
+
+    <!--<select id="getUserByNumber" resultMap="userResultMap">-->
+        <!--se-->
+    <!--</select>-->
 </mapper>

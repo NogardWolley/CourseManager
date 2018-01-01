@@ -19,11 +19,13 @@ import xmu.crms.entity.*;
 import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.exception.TopicNotFoundException;
+import xmu.crms.service.ClassService;
 import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.SeminarService;
 import xmu.crms.service.TopicService;
 import xmu.crms.service.impl.SeminarServiceImpl;
 import xmu.crms.vo.*;
+import xmu.crms.mapper.AttendanceMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -45,6 +47,12 @@ public class SeminarController {
 
     @Autowired
     SeminarGroupService seminarGroupService;
+
+    @Autowired
+    AttendanceMapper attendanceMapper;
+
+    @Autowired
+    ClassService classService;
     /**
      * @Description:按Id获取讨论课
      */
@@ -233,14 +241,30 @@ public class SeminarController {
             return ResponseEntity.status(404).build();
         }
     }
-//    /**
-//     * @Author:YellowDragon
-//     * @Description:按ID获取讨论课班级签到、分组状态
-//     */
-//    @PreAuthorize("hasRole('STUDENT')or hasRole('TEACHER')")
-//    @RequestMapping(value = "/{seminarId}/class/{classId}/attendance", method = GET)
-//    @ResponseBody
-//    public ResponseEntity getAttendanceStatus(@PathVariable int seminarId,@PathVariable int classId){
-//
-//    }
+    /**
+     * @Author:YellowDragon
+     * @Description:按ID获取讨论课班级签到、分组状态
+     */
+    @PreAuthorize("hasRole('STUDENT')or hasRole('TEACHER')")
+    @RequestMapping(value = "/{seminarId}/class/{classId}/attendance", method = GET)
+    @ResponseBody
+    public ResponseEntity getAttendanceStatus(@PathVariable int seminarId,@PathVariable int classId){
+        List<Attendance> list1=attendanceMapper.ListPresentAttendance(BigInteger.valueOf(seminarId),BigInteger.valueOf(classId));
+        List<CourseSelection>list2=attendanceMapper.CountStuNumByClassId(BigInteger.valueOf(classId));
+        AttendanceVO attendanceVO=null;
+        attendanceVO.setNumPresent(list1.size());
+        attendanceVO.setNumStudent(list2.size());
+        Location location=null;
+        try{
+            location=classService.getCallStatusById(BigInteger.valueOf(classId),BigInteger.valueOf(seminarId));
+        }catch (SeminarNotFoundException e){
+            e.printStackTrace();
+            return ResponseEntity.status(404).build();
+        }
+        if(location.getStatus().equals(0)) attendanceVO.setStatus("END");
+        else if(location.getStatus().equals(1))attendanceVO.setStatus("CALLING");
+        else attendanceVO.setStatus("BACK");
+        attendanceVO.setGroup("grouping");
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(attendanceVO);
+    }
 }

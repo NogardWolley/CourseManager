@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import xmu.crms.dao.AuthDao;
-import xmu.crms.dao.LoginDao;
+import xmu.crms.dao.LoginDaoo;
 import xmu.crms.security.MyAuthenticationProvider;
 import xmu.crms.security.MyAuthenticationToken;
 import xmu.crms.entity.User;
@@ -42,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired(required = false)
-    private LoginDao loginDao;
+    private LoginDaoo loginDao;
 
     @Value("appid")
     private String appid;

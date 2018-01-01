@@ -8,5 +8,6 @@
 3-1  SchoolService£º5
 3-4  TimerService£º10
 2-3  LoginService: 15
-2-3  Exception£º5
-1-1  AuthSeervice:
+1-8  Exception£º5
+1-1  AuthService:
+     SequrityService
