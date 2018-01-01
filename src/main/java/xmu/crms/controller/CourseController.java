@@ -17,7 +17,7 @@ import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.TopicNotFoundException;
 import xmu.crms.exception.UserNotFoundException;
-import xmu.crms.security.FifcosAuthenticationToken;
+//import xmu.crms.security.FifcosAuthenticationToken;
 import xmu.crms.mapper.GradeMapper;
 import xmu.crms.service.*;
 import xmu.crms.vo.*;
@@ -41,7 +41,7 @@ public class CourseController {
     @Autowired
     TopicService topicService;
     @Autowired(required = false)
-    GradeService gradeService;
+    GradeService GradeService;
     @Autowired
     CourseService courseService;
     @Autowired
@@ -327,7 +327,7 @@ public ResponseEntity getStudentSeminarsByCourseId(@PathVariable int courseId) t
     List<SeminarGroup> listSeminarGroup = new ArrayList<SeminarGroup>();
     List<SeminarAndGradeVO> listSeminarAndGradeVO = new ArrayList<SeminarAndGradeVO>();
 
-    listSeminarGroup = gradeService.listSeminarGradeByCourseId(userId, BigInteger.valueOf(courseId));
+    listSeminarGroup = GradeService.listSeminarGradeByCourseId(userId, BigInteger.valueOf(courseId));
     System.out.println(listSeminarGroup);
     for (SeminarGroup seminarGroup : listSeminarGroup) {
         SeminarAndGradeVO seminarAndGradeVO = new SeminarAndGradeVO(seminarGroup);
@@ -376,7 +376,7 @@ public ResponseEntity createSeminarByCourseId(@PathVariable int courseId, HttpSe
 public ResponseEntity getAllGradeByCourseId(@PathVariable int courseId){
     try {
         BigInteger userId = (BigInteger) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<SeminarGroup> seminarGroups = gradeService.listSeminarGradeByCourseId(userId, BigInteger.valueOf(courseId));
+        List<SeminarGroup> seminarGroups = GradeService.listSeminarGradeByCourseId(userId, BigInteger.valueOf(courseId));
         List<SeminarGradeVO> seminarGradeVOS = new ArrayList<SeminarGradeVO>();
         for (SeminarGroup seminarGroup : seminarGroups) {
             List<SeminarGroupTopic> seminarGroupTopics = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
