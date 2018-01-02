@@ -24,6 +24,13 @@ public class LoginSuccessVO {
         this.openid = openid;
 
     }
+    public LoginSuccessVO(BigInteger id, String type, String name, String jwt,String openid) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.jwt = jwt;
+        this.openid=openid;
+    }
     public LoginSuccessVO(BigInteger id, String type, String name, String jwt) {
         this.id = id;
         this.type = type;

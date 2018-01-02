@@ -157,15 +157,23 @@ public class LoginController {
             }
         }
         if(openid!=null){
+            User user=null;
             System.out.println(openid);
-        User user=userMapper.getUserByUserId(userMapper.getUserByOpenIdReturnUser(openid).getId());
-        if(user==null){
-            return new LoginSuccessVO(openid);
-        } else{
-            String jwt = jwtService.generateJwt(user);
-            return new LoginSuccessVO(user.getId(), user.getType() == 1 ? "teacher" : "student", user.getName(), jwt);
+            try {
+                user = userMapper.getUserByOpenIdReturnUser(openid);
+            }catch (Exception e){e.printStackTrace();System.out.println("无此用户");}
+            finally {
+
+                if (user == null) {
+                    System.out.println(openid);
+                    return new LoginSuccessVO(openid);
+                } else {
+                    String jwt = jwtService.generateJwt(user);
+                    return new LoginSuccessVO(user.getId(), user.getType() == 1 ? "teacher" : "student", user.getName(), jwt,openid);
+                }
             }
         }
         else {return null;}
+
     }
 }

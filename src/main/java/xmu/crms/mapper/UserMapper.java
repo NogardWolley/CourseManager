@@ -35,7 +35,7 @@ public interface UserMapper {
      *
      * @param user
      */
-    int insertUser(User user);
+    int insertUser(@Param("user") User user);
 
     /**
      * 根据id解绑用户，就是置手机号为空
@@ -166,4 +166,6 @@ public interface UserMapper {
     UserDetailsImpl getUserByOpenId(@Param("openid") String openid);
 
     User getUserByOpenIdReturnUser(@Param("openid") String openid);
+
+
 }

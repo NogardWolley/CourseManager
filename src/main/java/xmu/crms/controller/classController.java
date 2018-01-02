@@ -58,8 +58,10 @@ public class classController {
     @ResponseBody
     public ResponseEntity getAvailableClassesByUserId(@RequestParam(value = "courseName", required = false) String courseName,
                                                       @RequestParam(value = "courseTeacher", required = false) String teacherName) {
+        System.out.print("in 1");
         //获取当前用户id
         BigInteger userId = (BigInteger) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.print(userId);
         List<ClassInfo> allClassInfos=null;
         try {
             //获取所有班级信息
